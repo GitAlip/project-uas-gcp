@@ -1,0 +1,35 @@
+[
+  {
+    "id": "101",
+    "title": "Test Book Alpha",
+    "author": "Author A",
+    "genre": "Fiction",
+    "price": 50000,
+    "originalPrice": 60000,
+    "stock": 10,
+    "description": "Alpha book description",
+    "imageUrl": "img/alpha.jpg"
+  },
+  {
+    "id": "102",
+    "title": "Test Book Beta",
+    "author": "Author B",
+    "genre": "Non-Fiction",
+    "price": 75000,
+    "originalPrice": 80000,
+    "stock": 5,
+    "description": "Beta book description",
+    "imageUrl": "img/beta.jpg"
+  },
+  {
+    "id": "103",
+    "title": "Zero Stock Book",
+    "author": "Author C",
+    "genre": "Education",
+    "price": 40000,
+    "originalPrice": 45000,
+    "stock": 0,
+    "description": "Book with no stock",
+    "imageUrl": "img/zero.jpg"
+  }
+]

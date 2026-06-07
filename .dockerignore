@@ -1,0 +1,15 @@
+backend/node_modules
+node_modules
+.env
+backend/.env
+.git
+.gitignore
+.vscode
+.antigravitycli
+plan.md
+plan.txt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db

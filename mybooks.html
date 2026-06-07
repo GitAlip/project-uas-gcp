@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perpustakaan Saya - E-Book Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="login/img/logo ilham dan alip.png">
+  <style>
+    /* Styling khusus Halaman Perpustakaan */
+    .library-section {
+      padding: 120px 8% 60px 8%;
+      min-height: 80vh;
+      background: #fafafa;
+    }
+    .library-header {
+      margin-bottom: 40px;
+      border-bottom: 2px solid #089da1;
+      padding-pb: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .library-header h1 {
+      font-size: 35px;
+      color: #000;
+    }
+    .library-header h1 span {
+      color: #089da1;
+    }
+    .bookshelf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .shelf-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #eee;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .shelf-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+    .shelf-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      z-index: 10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .purchase-badge {
+      background-color: #089da1;
+    }
+    .borrow-badge {
+      background-color: #f59e0b;
+    }
+    .shelf-img-container {
+      height: 280px;
+      overflow: hidden;
+      background: #f1f5f9;
+      position: relative;
+    }
+    .shelf-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .shelf-info {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .shelf-info h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #1e293b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .shelf-info .author {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 15px;
+    }
+    .shelf-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .btn-read {
+      flex: 1;
+      background-color: #089da1;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s;
+    }
+    .btn-read:hover {
+      background-color: #05b2b6;
+    }
+    .btn-download {
+      background-color: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-download:hover {
+      background-color: #e2e8f0;
+      color: #1e293b;
+    }
+    .no-books {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 80px 0;
+    }
+    .no-books i {
+      font-size: 60px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+    .no-books h2 {
+      font-size: 20px;
+      color: #475569;
+      margin-bottom: 10px;
+    }
+    .no-books p {
+      color: #94a3b8;
+      margin-bottom: 25px;
+    }
+    .btn-shop {
+      background: #089da1;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: background-color 0.2s;
+    }
+    .btn-shop:hover {
+      background: #05b2b6;
+    }
+
+    /* Mock PDF Reader Modal */
+    .reader-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.95);
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+    }
+    .reader-header {
+      background: #1e293b;
+      color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+    }
+    .reader-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .reader-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 28px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .reader-close:hover {
+      color: #fff;
+    }
+    .reader-container {
+      flex-grow: 1;
+      display: flex;
+      height: calc(100vh - 60px);
+      overflow: hidden;
+    }
+    .reader-sidebar {
+      width: 280px;
+      background: #0f172a;
+      border-right: 1px solid #1e293b;
+      padding: 20px;
+      overflow-y: auto;
+      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex-shrink: 0;
+    }
+    .reader-sidebar h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #cbd5e1;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .chapter-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .chapter-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13.5px;
+      transition: all 0.2s ease;
+      color: #94a3b8;
+      line-height: 1.4;
+      border: 1px solid transparent;
+    }
+    .chapter-item:hover {
+      background: rgba(8, 157, 161, 0.15);
+      color: #089da1;
+      border-color: rgba(8, 157, 161, 0.3);
+    }
+    .chapter-item.active {
+      background: #089da1;
+      color: #fff;
+      font-weight: 600;
+      border-color: #089da1;
+    }
+    .reader-body {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+      overflow-y: auto;
+      background: #0b0f19;
+    }
+    .reader-page {
+      background: #ffffff;
+      color: #1e293b;
+      width: 100%;
+      max-width: 800px;
+      min-height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 50px 60px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .reader-page-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #94a3b8;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+    }
+    .reader-content h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+    .reader-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      color: #1e293b;
+    }
+    .reader-content p {
+      font-size: 15.5px;
+      line-height: 1.8;
+      text-align: justify;
+      margin-bottom: 20px;
+      color: #334155;
+    }
+    .reader-content pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 15px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Consolas', 'Courier New', Courier, monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 20px 0;
+      border-left: 4px solid #089da1;
+    }
+    .reader-content code {
+      font-family: 'Consolas', 'Courier New', Courier, monospace;
+      background: #f1f5f9;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+    }
+    .reader-content pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      font-size: inherit;
+    }
+    .reader-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 14.5px;
+    }
+    .reader-content th {
+      background: #f8fafc;
+      color: #1e293b;
+      font-weight: 600;
+      text-align: left;
+      padding: 12px;
+      border-bottom: 2px solid #e2e8f0;
+      border-top: 1px solid #e2e8f0;
+    }
+    .reader-content td {
+      padding: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #475569;
+    }
+    .reader-content tr:hover {
+      background: #f8fafc;
+    }
+    .reader-page-footer {
+      margin-top: auto;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 15px;
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .reader-container {
+        flex-direction: column;
+        height: calc(100vh - 60px);
+      }
+      .reader-sidebar {
+        width: 100%;
+        height: 160px;
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+        padding: 15px;
+      }
+      .reader-body {
+        padding: 15px;
+      }
+      .reader-page {
+        padding: 25px 20px;
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">
+      <img src="login/img/logo ilham dan alip.png">
+      <div class="hamburger" id="hamburger">&#9776;</div>
+    </div>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li class="nav-drawer-header">
+        <div class="user-profile-small">
+          <i class="fa-solid fa-circle-user"></i>
+          <div class="user-info-text">
+            <span class="user-name" id="drawer-user-name">Guest</span>
+            <span class="user-role" id="drawer-user-role">Pengunjung</span>
+          </div>
+        </div>
+        <button class="btn-close-drawer" id="btn-close-drawer">&times;</button>
+      </li>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="index.html#About"><i class="fa-solid fa-circle-info"></i> About</a></li>
+      <li><a href="index.html#Featured"><i class="fa-solid fa-compass"></i> Featured</a></li>
+      <li><a href="#" class="active"><i class="fa-solid fa-book"></i> Koleksi Saya</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="auth-buttons" id="auth-buttons-container">
+        <!-- JS setup -->
+      </div>
+    </div>
+  </nav>
+
+  <!-- Library Section -->
+  <section class="library-section">
+    <div class="library-header">
+      <h1>Koleksi E-Book <span>Saya</span></h1>
+      <p id="total-books-badge" style="background: #089da1; color: #fff; padding: 5px 12px; border-radius: 15px; font-weight: 600; font-size: 14px;">0 Buku</p>
+    </div>
+
+    <div class="bookshelf-grid" id="bookshelf-grid">
+      <div class="no-books">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <h2>Memuat perpustakaan Anda...</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="end" style="margin-top:0;">© 2025 Toko Buku Online | Dibuat oleh <span>Alip And Ilham</span></p>
+  </footer>
+
+  <!-- Mock PDF Reader Modal -->
+  <div class="reader-modal" id="reader-modal">
+    <div class="reader-header">
+      <h2 id="reader-book-title">Membaca E-Book</h2>
+      <button class="reader-close" id="btn-close-reader">&times;</button>
+    </div>
+    <div class="reader-container">
+      <div class="reader-sidebar">
+        <h4>Daftar Isi (TOC)</h4>
+        <ul class="chapter-list" id="reader-chapter-list">
+          <!-- Diisi via JS -->
+        </ul>
+      </div>
+      <div class="reader-body">
+        <div class="reader-page">
+          <div class="reader-page-header">
+            <span id="reader-book-author">Oleh: -</span>
+            <span id="reader-current-chapter-title">Memuat Bab...</span>
+          </div>
+          <div class="reader-content" id="reader-content-body">
+            <!-- Diisi via JS -->
+          </div>
+          <div class="reader-page-footer">
+            <span>E-Book Store Reader - Hak Cipta Dilindungi Undang-Undang</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="toast.js"></script>
+  <script>
+    const BACKEND_URL = 'http://localhost:5000/api';
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    // Check Auth
+    if (!token || !user) {
+      sessionStorage.setItem('toastMessage', 'Silakan login terlebih dahulu untuk mengakses perpustakaan Anda.');
+      sessionStorage.setItem('toastType', 'warning');
+      window.location.href = 'login/login&register.html';
+    }
+
+    // Setup Nav Auth & Mobile Drawer
+    const authContainer = document.getElementById('auth-buttons-container');
+    function setupNavbarAuth() {
+      const drawerName = document.getElementById('drawer-user-name');
+      const drawerRole = document.getElementById('drawer-user-role');
+      const navMenu = document.getElementById('nav-menu');
+
+      // Remove existing dynamic mobile elements to avoid duplicates
+      const removeOldMobileElements = () => {
+        ['nav-admin-drawer', 'nav-auth-drawer-li'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.remove();
+        });
+      };
+
+      removeOldMobileElements();
+
+      if (token && user) {
+        // Update profile in mobile drawer
+        if (drawerName) drawerName.textContent = user.username || 'Pengguna';
+        if (drawerRole) drawerRole.textContent = user.role === 'admin' ? 'Administrator' : 'Pengguna';
+
+        // If admin, add "Dashboard Admin" to both navbar and drawer
+        if (user.role === 'admin') {
+          if (navMenu && !document.getElementById('nav-admin-drawer')) {
+            const li = document.createElement('li');
+            li.id = 'nav-admin-drawer';
+            li.innerHTML = `<a href="admin/dashboard.html"><i class="fa-solid fa-user-gear"></i> Dashboard Admin</a>`;
+            navMenu.appendChild(li);
+          }
+        }
+
+        // Add mobile-only Logout button at the end of the drawer list
+        if (navMenu) {
+          const li = document.createElement('li');
+          li.id = 'nav-auth-drawer-li';
+          li.className = 'mobile-drawer-auth';
+          li.innerHTML = `<button id="btn-logout-drawer" class="btn-logout-drawer"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>`;
+          navMenu.appendChild(li);
+          
+          // Handler for mobile drawer logout
+          const logoutDrawerBtn = document.getElementById('btn-logout-drawer');
+          if (logoutDrawerBtn) {
+            logoutDrawerBtn.addEventListener('click', () => {
+              if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                sessionStorage.setItem('toastMessage', 'Berhasil keluar.');
+                sessionStorage.setItem('toastType', 'success');
+                window.location.href = 'index.html';
+              }
+            });
+          }
+        }
+
+        // Desktop navbar auth container buttons setup
+        if (authContainer) {
+          let buttonsHTML = '';
+          if (user.role === 'admin') {
+            buttonsHTML += `<a href="admin/dashboard.html" class="btn-dashboard" style="margin-right: 10px;">Dashboard Admin</a>`;
+          }
+          buttonsHTML += `<button id="btn-logout-nav" class="btn-logout-nav">Keluar</button>`;
+          authContainer.innerHTML = buttonsHTML;
+
+          // Event listener for desktop logout
+          const logoutBtn = document.getElementById('btn-logout-nav');
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+              if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                sessionStorage.setItem('toastMessage', 'Berhasil keluar.');
+                sessionStorage.setItem('toastType', 'success');
+                window.location.href = 'index.html';
+              }
+            });
+          }
+        }
+      } else {
+        // Guest User
+        if (drawerName) drawerName.textContent = 'Tamu';
+        if (drawerRole) drawerRole.textContent = 'Silakan Login';
+
+        // Add mobile-only Login link at the end of the drawer list
+        if (navMenu) {
+          const li = document.createElement('li');
+          li.id = 'nav-auth-drawer-li';
+          li.className = 'mobile-drawer-auth';
+          li.innerHTML = `<a href="login/login&register.html" class="btn-login-drawer"><i class="fa-solid fa-right-to-bracket"></i> Login</a>`;
+          navMenu.appendChild(li);
+        }
+
+        if (authContainer) {
+          authContainer.innerHTML = `<a href="login/login&register.html" class="btn-login">Login</a>`;
+        }
+      }
+    }
+
+    setupNavbarAuth();
+
+    // Hamburger Menu & Mobile Drawer Control
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const navBackdrop = document.getElementById('nav-backdrop');
+    const btnCloseDrawer = document.getElementById('btn-close-drawer');
+
+    function openDrawer() {
+      if (navMenu) navMenu.classList.add('active');
+      if (navBackdrop) {
+        navBackdrop.style.display = 'block';
+        setTimeout(() => {
+          navBackdrop.style.opacity = '1';
+        }, 10);
+      }
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      if (navMenu) navMenu.classList.remove('active');
+      if (navBackdrop) {
+        navBackdrop.style.opacity = '0';
+        setTimeout(() => {
+          navBackdrop.style.display = 'none';
+        }, 300);
+      }
+      document.body.style.overflow = '';
+    }
+
+    if (hamburger) {
+      hamburger.addEventListener('click', openDrawer);
+    }
+    if (btnCloseDrawer) {
+      btnCloseDrawer.addEventListener('click', closeDrawer);
+    }
+    if (navBackdrop) {
+      navBackdrop.addEventListener('click', closeDrawer);
+    }
+
+    // Close drawer when any anchor link is clicked
+    if (navMenu) {
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeDrawer);
+      });
+    }
+
+    // Load Purchased & Borrowed Books
+    const bookshelfGrid = document.getElementById('bookshelf-grid');
+    const totalBadge = document.getElementById('total-books-badge');
+    let countdownInterval = null;
+
+    async function loadMyBooks() {
+      try {
+        const [purchasedRes, borrowedRes] = await Promise.all([
+          fetch(`${BACKEND_URL}/purchases/my-books`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }),
+          fetch(`${BACKEND_URL}/borrows/my-borrows`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+        ]);
+
+        if (!purchasedRes.ok) throw new Error('Gagal mengambil koleksi buku pembelian');
+        if (!borrowedRes.ok) throw new Error('Gagal mengambil koleksi buku pinjaman');
+
+        const purchasedBooks = await purchasedRes.json();
+        const borrowedBooks = await borrowedRes.json();
+
+        renderBookshelf(purchasedBooks, borrowedBooks);
+      } catch (error) {
+        bookshelfGrid.innerHTML = `
+          <div class="no-books" style="color: #ef4444;">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h2>Terjadi Kesalahan</h2>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderBookshelf(purchasedBooks, borrowedBooks) {
+      const totalCount = purchasedBooks.length + borrowedBooks.length;
+      totalBadge.textContent = `${totalCount} Buku`;
+
+      if (countdownInterval) clearInterval(countdownInterval);
+
+      if (totalCount === 0) {
+        bookshelfGrid.innerHTML = `
+          <div class="no-books">
+            <i class="fa-solid fa-book"></i>
+            <h2>Koleksi Buku Masih Kosong</h2>
+            <p>Anda belum membeli atau meminjam e-book apa pun. Jelajahi katalog kami untuk membeli atau meminjam buku!</p>
+            <a href="index.html#Featured" class="btn-shop">Jelajahi Katalog</a>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+
+      // Render Purchased Books
+      purchasedBooks.forEach(book => {
+        const imgUrl = (book.imageUrl && (book.imageUrl.startsWith('http') || book.imageUrl.startsWith('data:')))
+          ? book.imageUrl
+          : book.imageUrl || 'image/table.png';
+
+        html += `
+          <div class="shelf-card">
+            <div class="shelf-img-container">
+              <span class="shelf-badge purchase-badge">Milik Saya</span>
+              <img src="${imgUrl}" onerror="this.src='image/table.png'" alt="${book.title}">
+            </div>
+            <div class="shelf-info">
+              <h3>${book.title}</h3>
+              <span class="author">Oleh: ${book.author}</span>
+              <div class="shelf-actions">
+                <button class="btn-read" onclick="openReader('${book.id}', '${book.title.replace(/'/g, "\\'")}', '${book.author.replace(/'/g, "\\'")}')">
+                  <i class="fa-solid fa-book-open"></i> Baca
+                </button>
+                <button class="btn-download" onclick="downloadEbook('${book.title.replace(/'/g, "\\'")}')" title="Unduh EPUB/PDF">
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      // Render Borrowed Books
+      borrowedBooks.forEach(book => {
+        const imgUrl = (book.imageUrl && (book.imageUrl.startsWith('http') || book.imageUrl.startsWith('data:')))
+          ? book.imageUrl
+          : book.imageUrl || 'image/table.png';
+
+        const isExpired = new Date() > new Date(book.borrowDetail.expiryDate);
+
+        html += `
+          <div class="shelf-card borrowed-card" id="card-borrow-${book.borrowDetail.id}">
+            <div class="shelf-img-container">
+              <span class="shelf-badge borrow-badge">Pinjaman</span>
+              <img src="${imgUrl}" onerror="this.src='image/table.png'" alt="${book.title}">
+            </div>
+            <div class="shelf-info">
+              <h3>${book.title}</h3>
+              <span class="author">Oleh: ${book.author}</span>
+              
+              <!-- Countdown Timer -->
+              <div class="countdown-timer" id="timer-${book.borrowDetail.id}" data-expiry="${book.borrowDetail.expiryDate}" style="font-size: 12px; font-weight: 700; color: #f59e0b; margin-bottom: 12px; display: flex; align-items: center; gap: 5px;">
+                <i class="fa-solid fa-clock"></i> <span>Menghitung sisa waktu...</span>
+              </div>
+              
+              <div class="shelf-actions">
+                <button class="btn-read btn-read-borrow" id="btn-read-${book.borrowDetail.id}" onclick="openReader('${book.id}', '${book.title.replace(/'/g, "\\'")}', '${book.author.replace(/'/g, "\\'")}')" ${isExpired ? 'disabled style="background-color: #94a3b8; cursor: not-allowed;"' : ''}>
+                  <i class="fa-solid fa-book-open"></i> Baca
+                </button>
+                <button class="btn-download" disabled style="opacity: 0.5; cursor: not-allowed;" title="Buku pinjaman tidak dapat diunduh">
+                  <i class="fa-solid fa-lock"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      bookshelfGrid.innerHTML = html;
+
+      // Start live countdown timer update loop
+      startCountdownTimers();
+    }
+
+    function startCountdownTimers() {
+      const timerElements = document.querySelectorAll('.countdown-timer');
+      
+      const updateTimers = () => {
+        timerElements.forEach(el => {
+          const expiryStr = el.getAttribute('data-expiry');
+          const expiryDate = new Date(expiryStr);
+          const now = new Date();
+          const diffMs = expiryDate - now;
+
+          const timerId = el.id.replace('timer-', '');
+          const readBtn = document.getElementById(`btn-read-${timerId}`);
+
+          if (diffMs <= 0) {
+            el.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> <span style="color: #ef4444;">Waktu Pinjam Habis</span>`;
+            if (readBtn && !readBtn.disabled) {
+              readBtn.disabled = true;
+              readBtn.style.backgroundColor = '#94a3b8';
+              readBtn.style.cursor = 'not-allowed';
+            }
+          } else {
+            const totalSecs = Math.floor(diffMs / 1000);
+            const hrs = Math.floor(totalSecs / 3600);
+            const mins = Math.floor((totalSecs % 3600) / 60);
+            const secs = totalSecs % 60;
+
+            let timeString = '';
+            if (hrs > 0) timeString += `${hrs}j `;
+            if (mins > 0 || hrs > 0) timeString += `${mins}m `;
+            timeString += `${secs}s`;
+
+            el.querySelector('span').textContent = `Sisa: ${timeString}`;
+          }
+        });
+      };
+
+      updateTimers();
+      countdownInterval = setInterval(updateTimers, 1000);
+    }
+
+    // Download Simulator
+    window.downloadEbook = function(title) {
+      Toast.success(`Mengunduh file E-Book "${title}"...\nFile PDF/EPUB telah disimpan ke folder Download Anda.`);
+    };
+
+    // Reader Modal Control & AI Dynamic Reader
+    const readerModal = document.getElementById('reader-modal');
+    const readerTitle = document.getElementById('reader-book-title');
+    const readerAuthor = document.getElementById('reader-book-author');
+    const readerContent = document.getElementById('reader-content-body');
+    const readerChapterList = document.getElementById('reader-chapter-list');
+    const readerCurrentChapterTitle = document.getElementById('reader-current-chapter-title');
+    const btnCloseReader = document.getElementById('btn-close-reader');
+
+    let currentOpenBookId = null;
+
+    window.openReader = async function(bookId, title, author) {
+      currentOpenBookId = bookId;
+      readerTitle.textContent = `Membaca: ${title}`;
+      readerAuthor.textContent = `Oleh: ${author}`;
+      readerCurrentChapterTitle.textContent = 'Memuat Daftar Isi...';
+      
+      readerChapterList.innerHTML = `
+        <div style="text-align: center; padding: 20px 0; color: #64748b;">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </div>
+      `;
+      readerContent.innerHTML = `
+        <div style="text-align: center; padding: 50px 0;">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 36px; color: #089da1; margin-bottom: 15px;"></i>
+          <p style="color: #64748b; font-weight: 500;">Memuat buku dan mengunduh daftar isi...</p>
+        </div>
+      `;
+      
+      readerModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      try {
+        // Ambil Daftar Isi (Table of Contents) dari backend
+        const tocResponse = await fetch(`${BACKEND_URL}/books/toc/${bookId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!tocResponse.ok) {
+          throw new Error('Gagal mengambil daftar isi buku.');
+        }
+
+        const tocData = await tocResponse.json();
+        
+        // Render daftar isi di sidebar
+        readerChapterList.innerHTML = '';
+        tocData.forEach((chapter, index) => {
+          const li = document.createElement('li');
+          li.className = 'chapter-item';
+          if (index === 0) li.classList.add('active'); // Aktifkan bab pertama secara default
+          li.textContent = chapter.title;
+          li.dataset.chapterId = chapter.id;
+          li.dataset.chapterTitle = chapter.title;
+          
+          li.addEventListener('click', () => {
+            // Hapus kelas aktif dari bab lain
+            document.querySelectorAll('.chapter-item').forEach(item => item.classList.remove('active'));
+            li.classList.add('active');
+            loadChapterContent(bookId, chapter.id, chapter.title);
+          });
+          
+          readerChapterList.appendChild(li);
+        });
+
+        // Muat isi bab pertama secara default
+        if (tocData.length > 0) {
+          await loadChapterContent(bookId, tocData[0].id, tocData[0].title);
+        } else {
+          readerContent.innerHTML = `<p>Tidak ada isi bab yang dapat ditampilkan.</p>`;
+        }
+
+      } catch (error) {
+        readerContent.innerHTML = `
+          <div style="text-align: center; padding: 40px 0; color: #ef4444;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 48px; margin-bottom: 15px;"></i>
+            <h3>Gagal Membaca Buku</h3>
+            <p style="margin-top: 10px; color: #64748b;">${error.message}</p>
+          </div>
+        `;
+        readerChapterList.innerHTML = `<li style="padding: 10px; color: #ef4444; font-size: 13px; text-align: center;">Gagal memuat daftar isi</li>`;
+      }
+    };
+
+    async function loadChapterContent(bookId, chapterId, chapterTitle) {
+      readerCurrentChapterTitle.textContent = chapterTitle;
+      readerContent.innerHTML = `
+        <div style="text-align: center; padding: 50px 0;">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 36px; color: #089da1; margin-bottom: 15px;"></i>
+          <p style="color: #64748b; font-weight: 500;">Memuat isi bab riil dari server AI Gemini...</p>
+        </div>
+      `;
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/books/read/${bookId}?chapterId=${chapterId}&chapterTitle=${encodeURIComponent(chapterTitle)}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || 'Gagal memuat isi bab.');
+        }
+
+        // Tampilkan HTML bab riil yang digenerate Gemini
+        readerContent.innerHTML = data.content;
+        
+        // Scroll kembali ke atas saat ganti bab
+        document.querySelector('.reader-body').scrollTop = 0;
+      } catch (error) {
+        readerContent.innerHTML = `
+          <div style="text-align: center; padding: 40px 0; color: #ef4444;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 36px; margin-bottom: 15px;"></i>
+            <h4>Gagal Memuat Bab</h4>
+            <p style="margin-top: 10px; color: #64748b;">${error.message}</p>
+            <button class="btn-read" style="margin-top: 15px; padding: 8px 16px;" onclick="loadChapterContent('${bookId}', '${chapterId}', '${chapterTitle.replace(/'/g, "\\'")}')">Coba Lagi</button>
+          </div>
+        `;
+      }
+    }
+
+    btnCloseReader.addEventListener('click', () => {
+      readerModal.style.display = 'none';
+      document.body.style.overflow = '';
+      currentOpenBookId = null;
+    });
+
+    // Load on init
+    loadMyBooks();
+  </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - E-Book Store</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../login/img/logo ilham dan alip.png">
+</head>
+<body>
+  <div class="dashboard-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="../login/img/logo ilham dan alip.png" alt="Logo">
+        <h2>Admin E-Book</h2>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="#" class="menu-item active" id="btn-tab-books">
+          <i class="fa-solid fa-book"></i>
+          <span>Kelola Buku</span>
+        </a>
+        <a href="../index.html" class="menu-item">
+          <i class="fa-solid fa-store"></i>
+          <span>Lihat Toko</span>
+        </a>
+        <button class="menu-item logout-btn" id="btn-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Keluar</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <p>Login sebagai:</p>
+        <span class="user-badge" id="admin-username">Admin</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="content-header">
+        <div class="header-title">
+          <h1>Kelola Koleksi Buku</h1>
+          <p>Tambahkan, edit, dan pantau ketersediaan buku di E-Book Store.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="btn-add-book">
+            <i class="fa-solid fa-plus"></i> Tambah Buku Baru
+          </button>
+        </div>
+      </header>
+
+      <!-- Statistics Panel -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper books">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div class="stat-details">
+            <h3 id="stat-total-books">0</h3>
+            <p>Total Judul Buku</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stock">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div class="stat-details">
+            <h3 id="stat-total-stock">0</h3>
+            <p>Total Stok Buku</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper genres">
+            <i class="fa-solid fa-tags"></i>
+          </div>
+          <div class="stat-details">
+            <h3 id="stat-total-genres">0</h3>
+            <p>Kategori/Genre</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Books Table Section -->
+      <section class="table-container">
+        <div class="table-header">
+          <h2>Daftar Buku Terkini</h2>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Cari judul, penulis, genre...">
+          </div>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="books-table">
+            <thead>
+              <tr>
+                <th>Buku / Judul</th>
+                <th>Kategori</th>
+                <th>Harga</th>
+                <th>Status Stok</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="books-table-body">
+              <!-- Baris tabel di-render melalui JavaScript -->
+              <tr>
+                <td colspan="5" class="table-loading">Memuat data buku...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal Tambah / Edit Buku -->
+  <div class="modal" id="book-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Tambah Buku Baru</h2>
+        <button class="close-btn" id="btn-close-modal">&times;</button>
+      </div>
+      <form id="book-form">
+        <input type="hidden" id="book-id">
+        
+        <div class="form-group online-search-group">
+          <label class="online-search-label">Cari Data Buku Secara Online (Google Books)</label>
+          <div class="search-input-wrapper">
+            <input type="text" id="api-search-input" placeholder="Masukkan judul buku atau pengarang...">
+            <button type="button" class="btn btn-secondary" id="btn-api-search"><i class="fa-solid fa-earth-americas"></i> Cari</button>
+          </div>
+          <div class="api-results-dropdown" id="api-results-dropdown">
+            <!-- Hasil pencarian akan di-render di sini -->
+          </div>
+        </div>
+        <hr class="form-divider">
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="book-title">Judul Buku</label>
+            <input type="text" id="book-title" placeholder="Masukkan judul buku" required>
+          </div>
+          <div class="form-group">
+            <label for="book-author">Penulis / Pengarang</label>
+            <input type="text" id="book-author" placeholder="Masukkan nama penulis" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="book-genre">Kategori / Genre</label>
+            <input type="text" id="book-genre" placeholder="Contoh: Self Development, Programming" required>
+          </div>
+          <div class="form-group">
+            <label for="book-image">URL Gambar Sampul</label>
+            <input type="text" id="book-image" placeholder="Contoh: img/buku1.jpg atau URL online">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="book-price">Harga Buku (Rp)</label>
+            <input type="number" id="book-price" placeholder="Contoh: 50000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label for="book-stock">Jumlah Stok</label>
+            <input type="number" id="book-stock" placeholder="Contoh: 10" min="0" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="book-description">Deskripsi / Sinopsis Buku</label>
+          <textarea id="book-description" rows="3" placeholder="Masukkan sinopsis singkat buku..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-modal">Simpan Buku</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../toast.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

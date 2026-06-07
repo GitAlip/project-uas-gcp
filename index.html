@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/png" href="login/img/logo ilham dan alip.png">
+</head>
+<body>
+    
+    <div class="nav-backdrop" id="nav-backdrop"></div>
+    
+    <section id="Home">
+        <nav>
+          <div class="logo">
+            <img src="login/img/logo ilham dan alip.png">
+            <div class="hamburger" id="hamburger">&#9776;</div>
+          </div>
+      
+          <ul class="nav-menu" id="nav-menu">
+            <li class="nav-drawer-header">
+              <div class="user-profile-small">
+                <i class="fa-solid fa-circle-user"></i>
+                <div class="user-info-text">
+                  <span class="user-name" id="drawer-user-name">Guest</span>
+                  <span class="user-role" id="drawer-user-role">Pengunjung</span>
+                </div>
+              </div>
+              <button class="btn-close-drawer" id="btn-close-drawer">&times;</button>
+            </li>
+            <li><a href="#Home"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#About"><i class="fa-solid fa-circle-info"></i> About</a></li>
+            <li><a href="#Featured"><i class="fa-solid fa-compass"></i> Featured</a></li>
+            <li><a href="#Arrivals"><i class="fa-solid fa-fire-flame-simple"></i> Arrivals</a></li>
+            <li><a href="#Reviews"><i class="fa-solid fa-star-half-stroke"></i> Reviews</a></li>
+          </ul>
+      
+          <div class="nav-right">
+            <div class="search-bar-container">
+              <input type="text" id="main-search-input" placeholder="Cari buku...">
+              <div class="social_icon" id="main-search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+            </div>
+            
+            <!-- Ikon Keranjang Belanja -->
+            <div class="cart-icon-wrapper" id="cart-icon-wrapper" style="position: relative; margin-right: 20px; cursor: pointer; display: flex; align-items: center;">
+              <i class="fa-solid fa-cart-shopping" style="font-size: 20px; color: #000; transition: color 0.2s;"></i>
+              <span id="cart-badge" style="position: absolute; top: -8px; right: -10px; background: #ef4444; color: #fff; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid #fff;">0</span>
+            </div>
+            
+            <div class="auth-buttons" id="auth-buttons-container">
+              <a href="login/login&register.html" class="btn-login">Login</a>
+            </div>
+          </div>
+        </nav>
+
+
+<div class="content_wrap">
+<!-- Banner -->
+    <div class="banner">
+        <div class="banner_slide">
+            <img src="image/banner3.jpg" class="active">
+            <img src="img/banner.png">
+            <img src="image/ia.png" alt="">
+        </div>
+    </div>
+</div>
+        <div class="header">
+            <div class="header_tag">
+                <h1>Welcome to<br><span>E-BOOK STORE</span></h1>
+                <p>
+                    Temukan dunia pengetahuan tanpa batas di ujung jarimu. Kami hadir untuk kamu yang haus akan bacaan berkualitas, mulai dari novel fiksi memikat, buku pengembangan diri yang membuka wawasan, hingga referensi akademik yang mendalam.  
+    Ebook Store bukan sekadar toko—ini adalah rumah bagi para pembelajar, pemimpi, dan pencari inspirasi.  
+    Jelajahi koleksi kami, unduh dengan mudah, dan nikmati kebebasan membaca kapan pun, di mana pun.  
+    Karena di sini, membaca bukan lagi sekadar hobi—tapi gaya hidup.
+                </p>
+                <a href="javascript:void(0)" class="header_btn">Learn More</a>
+            </div>
+            <div class="header_img">
+                <img src="image/table.png">
+            </div>
+        </div>
+    </section>
+
+
+    <!--About-->
+
+    <div id="About" class="about">
+
+        <div class="about_image">
+            <img src="image/about.png">
+        </div>
+        <div class="about_tag">
+            <h1>About us</h1>
+            <p><strong>Nama:</strong> Muhamad Nur Alif<br>
+                <strong>NIM:</strong> 2303421004<br>
+                <strong>Kelas:</strong> BM4A
+    <br><br>
+    <strong>Nama:</strong> Ilham Wibowo<br>
+           <strong>NIM:</strong> 2303421009<br>
+           <strong>Kelas:</strong> BM4A
+    <br><br>
+    Terima kasih telah menjadi bagian dari perjalanan kami. Ebook Store ada untukmu—para pembaca sejati, penjelajah ide, dan pencinta ilmu.
+            </p>
+            <a href="javascript:void(0)" class="about_btn">Learn More</a>
+        </div>
+
+    </div>
+
+
+    <!--Books-->
+
+    <div id="Featured" class="featured_boks">
+
+        <h1>Our Collection</h1>
+
+        <div class="featured_book_box">
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="img/buku1.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Atomic Habits</h2>
+                    <p class="writer">James Clear</p>
+                    <div class="categories">Self Development</div>
+                    <p class="book_price">Rp.50.000<sub><del>Rp.60.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="img/buku2.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Deep Work</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories">Self Development</div>
+                    <p class="book_price">Rp.55.000<sub><del>Rp.65.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="img/buku3.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Making Learning </h2>
+                    <p class="writer">David Perkins</p>
+                    <div class="categories">Education, Self Development</div>
+                    <p class="book_price">Rp.65.000<sub><del>Rp.70.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="img/buku4.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Range</h2>
+                    <p class="writer">David Epstein</p>
+                    <div class="categories">Self Development, Psychology</div>
+                    <p class="book_price">Rp.70.000<sub><del>Rp.80.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="img/buku5.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Mchine Learning</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories">Programming</div>
+                    <p class="book_price">Rp.85.000<sub><del>Rp.90.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+            
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="img/buku6.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Web Scalability</h2>
+                    <p class="writer">John </p>
+                    <div class="categories">Programming</div>
+                    <p class="book_price">Rp.85.000<sub><del>Rp.90.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_7.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>The Art City</h2>
+                    <p class="writer">John Doe</p>
+                    <div class="categories">Novel</div>
+                    <p class="book_price">Rp.56.000<sub><del>Rp.65.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_8.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Music Rock</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories">Novel</div>
+                    <p class="book_price">Rp.70.000<sub><del>Rp.80.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_9.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Free Fall</h2>
+                    <p class="writer">Peter Cawdron</p>
+                    <div class="categories">Thriller, Horror, Romance</div>
+                    <p class="book_price">Rp.85.000<sub><del>Rp.90.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_10.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Sample Text</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories"> Romance</div>
+                    <p class="book_price">Rp.68.000<sub><del>Rp.75.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_11.jpg">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Boring Girls</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories"> Romance</div>
+                    <p class="book_price">Rp.69.000<sub><del>Rp.79.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_12.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Give Thanks</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories"> Romance</div>
+                    <p class="book_price">Rp.75.000<sub><del>Rp.80.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_13.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Your Title</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories">Thriller, Horror</div>
+                    <p class="book_price">Rp.68.000<sub><del>Rp.75.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_14.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Sea</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories"> Romance</div>
+                    <p class="book_price">Rp.80.000<sub><del>Rp.90.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">Beli</a>
+                </div>               
+
+            </div>
+
+            <div class="featured_book_card">
+
+                <div class="featurde_book_img">
+                    <img src="image/book_15.png">
+                </div>
+
+                <div class="featurde_book_tag">
+                    <h2>Black History</h2>
+                    <p class="writer">John Deo</p>
+                    <div class="categories">History</div>
+                    <p class="book_price">Rp.75.000<sub><del>Rp.80.000</del></sub></p>
+                    <a href="javascript:void(0)" class="f_btn">beli</a>
+                </div>               
+
+            </div>
+
+        </div>
+
+    </div>
+
+    
+<!--Arrivals-->
+<div id="Arrivals" class="arrivals">
+    <h1>New E-book</h1>
+
+    <div class="arrivals_box">
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_1.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_2.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_3.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_4.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_5.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_6.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_7.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_8.webp">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_9.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+        <div class="arrivals_card">
+            <div class="arrivals_image">
+                <img src="image/arrival_10.jpg">
+            </div>
+            <div class="arrivals_tag">
+                <p>New Arrivals</p>
+                <div class="arrivals_icon">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <a href="javascript:void(0)" class="arrivals_btn">Beli Sekarang</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <!--reviews-->
+
+    <div id="Reviews" class="reviews">
+        <h1>Reviews</h1>
+
+        <div class="review_box">
+
+            <div class="review_card">
+                <i class="fa-solid fa-quote-right"></i>
+                <div class="card_top">
+                    <img src="image/alip.jpg">
+                </div>
+                <div class="card">
+                    <h2>Alip</h2>
+                    <p>Awalnya cuma iseng beli satu eBook karena lagi promo, eh keterusan sampe beli lima. Formatnya enak dibaca di HP, layout bersih, dan yang paling penting—nggak bikin mata capek. Ceritanya juga nggak pasaran, kayak beneran dipilih yang berkualitas. Gue suka banget yang genre thriller, dan ternyata ada koleksi lokal yang mind-blowing juga. Pokoknya recommended lah buat yang suka baca tapi males ribet
+                    </p>
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review_card">
+                <i class="fa-solid fa-quote-right"></i>
+                <div class="card_top">
+                    <img src="image/ilham2.jpg">
+                </div>
+                <div class="card">
+                    <h2>Ilham</h2>
+                    <p>Saya itu jarang baca eBook karena biasanya suka error pas dibuka di tablet. Tapi website ini beda, tinggal beli, download, selesai! Enggak perlu daftar ribet atau masukin kode aneh-aneh. Koleksi roman dan novel ringan di sini tuh manis-manis banget, cocok buat temen nyantai sambil nunggu anak tidur. Udah gitu harganya juga ramah kantong. Saya sih udah rekomendasiin ke arisan komplek, hihi
+                    </p>
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review_card">
+                <i class="fa-solid fa-quote-right"></i>
+                <div class="card_top">
+                    <img src="image/review_2.png">
+                </div>
+                <div class="card">
+                    <h2>Quinn Love</h2>
+                    <p>Gue tuh termasuk picky soal buku. Tapi pas nemu toko ini, koleksi nonfiksinya surprisingly lengkap dan bener-bener sesuai minat. Ada buku teknologi, bisnis, sampe psikologi yang bahasanya enggak ribet. Gue paling suka fitur ‘preview’ di halaman produk, jadi bisa intip bab awal dulu sebelum beli. Enak, kayak bisa ‘test drive’ buku dulu. Dan yang penting, sistem checkout-nya simpel banget. Gak ada drama.
+                    </p>
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review_card">
+                <i class="fa-solid fa-quote-right"></i>
+                <div class="card_top">
+                    <img src="image/review_4.png">
+                </div>
+                <div class="card">
+                    <h2>Guinevere Beck</h2>
+                    <p>Akhirnya nemu website Ebook yang cukup lengkap. Banyak cerita-cerita indie yang gak mainstream tapi kualitasnya keren. Ada yang gaya ceritanya kayak fanfic tapi lebih rapi dan niat. Aku udah bookmark beberapa dan tiap malem baca satu-satu. Yang aku suka, penulisnya juga kadang bales review kita di halaman buku, jadi kayak ada interaksi langsung gitu. Sweet banget. Buat aku sih ini surga kecil buat para pecinta cerita digital
+                    </p>
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+<!--Services-->
+
+<div class="services">
+    <h1>Our services</h1>
+
+    <div class="services_box">
+
+        <div class="services_card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>Akses Instan</h3>
+            <p>
+                Setelah pembayaran berhasil, eBook langsung tersedia untuk diunduh tanpa harus menunggu atau pengiriman fisik.
+            </p>
+        </div>
+
+        <div class="services_card">
+            <i class="fa-solid fa-headset"></i>
+            <h3>Layanan 24/7</h3>
+            <p>
+                Tim dukungan kami siap membantu Anda kapan saja, setiap hari, tanpa henti — melalui email atau chat.
+            </p>
+        </div>
+
+        <div class="services_card">
+            <i class="fa-solid fa-tag"></i>
+            <h3>Penawaran Terbaik</h3>
+            <p>
+                Dapatkan harga spesial dan promo menarik untuk koleksi buku digital favorit Anda.
+            </p>
+        </div>
+
+        <div class="services_card">
+            <i class="fa-solid fa-lock"></i>
+            <h3>Pembayaran Aman</h3>
+            <p>
+                Transaksi dilindungi sistem enkripsi modern dan metode pembayaran terpercaya yang aman.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!--Footer-->
+
+<footer>
+    <div class="footer_main">
+
+        <div class="tag">
+            <img src="login/img/logo ilham dan alip.png">
+            <p>
+                Kami adalah toko buku online yang menyediakan berbagai koleksi buku terbaik untuk semua kalangan. 
+                Temukan buku favorit Anda dan nikmati pengalaman membaca yang menyenangkan bersama kami!
+            </p>
+        </div>
+
+        <div class="tag">
+            <h1>Quick Link</h1>
+            <a href="#Home">Home</a>
+            <a href="#About">About us</a>
+            <a href="#Featured">Featured</a>
+            <a href="#Arrivals">New Ebook</a>
+            <a href="#Reviews">Reviews</a>
+        </div>
+
+        <div class="tag">
+            <h1>Contact Info</h1>
+            <a href="javascript:void(0)"><i class="fa-solid fa-phone"></i> +62 812 3456 7890</a>
+            <a href="javascript:void(0)"><i class="fa-solid fa-envelope"></i> support@tokobukuonline.com</a>
+        </div>
+
+        <div class="tag">
+            <h1>Follow Us</h1>
+            <div class="social_link">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+            </div>
+        </div>
+
+        <div class="tag">
+            <h1>Newsletter</h1>
+            <div class="search_bar">
+                <input type="text" placeholder="Masukkan email Anda">
+                <button type="submit">Subscribe</button>
+            </div>                
+        </div>              
+    </div>
+    <p class="end">© 2025 Toko Buku Online | Dibuat oleh <span>Alip And Ilham</span></p>
+</footer>
+
+<!-- Cart Drawer (Keranjang Belanja) -->
+<div class="cart-drawer" id="cart-drawer" style="position: fixed; top: 0; right: -400px; width: 380px; height: 100%; background: #ffffff; box-shadow: -5px 0 25px rgba(0,0,0,0.15); z-index: 1500; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; font-family: 'Plus Jakarta Sans', sans-serif;">
+  <div class="cart-drawer-header" style="background: #1e293b; color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="margin: 0; font-size: 18px; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-cart-shopping"></i> Keranjang Belanja</h3>
+    <button id="btn-close-cart" style="background: none; border: none; color: #94a3b8; font-size: 28px; cursor: pointer; transition: color 0.15s; outline: none;">&times;</button>
+  </div>
+  
+  <div class="cart-drawer-body" id="cart-items-container" style="flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #f8fafc;">
+    <!-- Barang belanjaan di-render di sini secara dinamis -->
+    <p style="text-align: center; color: #64748b; margin-top: 40px;">Keranjang belanja Anda kosong.</p>
+  </div>
+  
+  <div class="cart-drawer-footer" style="padding: 20px; border-top: 1px solid #e2e8f0; background: #fff;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 700; font-size: 16px; color: #0f172a;">
+      <span>Total:</span>
+      <span id="cart-total-price">Rp 0</span>
+    </div>
+    
+    <!-- Metode Pembayaran -->
+    <div style="margin-bottom: 15px;">
+      <label style="font-size: 12px; font-weight: 600; color: #64748b; display: block; margin-bottom: 5px;">Metode Pembayaran (Simulasi)</label>
+      <select id="payment-method-select" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 13px; outline: none; background: #fff;">
+        <option value="bank-transfer">Virtual Account (BCA/Mandiri)</option>
+        <option value="gopay">GoPay / e-Wallet</option>
+        <option value="ovo">OVO / e-Wallet</option>
+        <option value="credit-card">Kartu Kredit Simulasi</option>
+      </select>
+    </div>
+    
+    <button id="btn-checkout" style="width: 100%; background: #089da1; color: #fff; border: none; padding: 12px; border-radius: 25px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s;">
+      <i class="fa-solid fa-credit-card"></i> Bayar Sekarang
+    </button>
+  </div>
+</div>
+
+<!-- Dialogflow Messenger (Gemini Enterprise Agent / Dialogflow CX - Opsi B) -->
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+<df-messenger
+  location="asia-southeast2"
+  project-id="ebookstore-uas-2026-498209"
+  agent-id="643adfa8-5f92-49fd-bad5-15322e4c9f38"
+  language-code="id"
+  max-query-length="-1"
+  storage-option="none">
+  <df-messenger-chat-bubble
+    chat-title="EbookStore-Agent">
+  </df-messenger-chat-bubble>
+</df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    --df-messenger-font-color: #000;
+    --df-messenger-font-family: Google Sans;
+    --df-messenger-chat-background: #f3f6fc;
+    --df-messenger-message-user-background: #d3e3fd;
+    --df-messenger-message-bot-background: #fff;
+    bottom: 16px;
+    right: 16px;
+  }
+</style>
+<script>
+  // Reset session and clear chat history when closed/minimized
+  document.addEventListener('DOMContentLoaded', () => {
+    const dfMessenger = document.querySelector('df-messenger');
+    if (dfMessenger) {
+      dfMessenger.addEventListener('df-chat-open-changed', (event) => {
+        if (!event.detail.isOpen) {
+          dfMessenger.startNewSession();
+        }
+      });
+    }
+  });
+</script>
+
+
+<script src="toast.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
