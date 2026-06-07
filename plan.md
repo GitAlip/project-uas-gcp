@@ -221,8 +221,8 @@ gcloud run deploy ebookstore-app \
   --image=asia-southeast2-docker.pkg.dev/ebookstore-uas-2026-498209/ebookstore-repo/ebookstore-app:latest \
   --region=asia-southeast2 \
   --allow-unauthenticated \
-  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance \
-  --set-env-vars=DB_HOST=localhost,DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance \
+  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore \
+  --set-env-vars=DB_HOST=localhost,DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore \
   --set-secrets=JWT_SECRET=JWT_SECRET:latest,DB_PASSWORD=DB_PASSWORD:latest
 ```
 
@@ -281,7 +281,7 @@ gcloud artifacts repositories create ebookstore-repo \
 ### Step 3 — Buat Cloud SQL Instance & Database (Sekali Saja)
 ```bash
 # Buat instance MySQL
-gcloud sql instances create ebookstore-db-instance \
+gcloud sql instances create ebookstore \
   --database-version=MYSQL_8_0 \
   --tier=db-f1-micro \
   --region=asia-southeast2
@@ -289,17 +289,17 @@ gcloud sql instances create ebookstore-db-instance \
 # Set password root
 gcloud sql users set-password root \
   --host="%" \
-  --instance=ebookstore-db-instance \
+  --instance=ebookstore \
   --password="PASSWORD_ROOT_LO"
 
 # Buat user database
 gcloud sql users create db_user \
-  --instance=ebookstore-db-instance \
+  --instance=ebookstore \
   --password="PASSWORD_DB_USER_LO"
 
 # Buat database
 gcloud sql databases create ebookstore_db \
-  --instance=ebookstore-db-instance
+  --instance=ebookstore
 ```
 
 ### Step 4 — Simpan Secrets di Secret Manager (Sekali Saja)
@@ -349,8 +349,8 @@ gcloud run deploy ebookstore-app \
   --platform=managed \
   --allow-unauthenticated \
   --port=8080 \
-  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance \
-  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance" \
+  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore \
+  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore" \
   --set-secrets="JWT_SECRET=JWT_SECRET:latest,DB_PASSWORD=DB_PASSWORD:latest"
 ```
 
@@ -381,8 +381,8 @@ gcloud run deploy ebookstore-app \
   --platform=managed \
   --allow-unauthenticated \
   --port=8080 \
-  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance \
-  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance" \
+  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore \
+  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore" \
   --set-secrets="JWT_SECRET=JWT_SECRET:latest,DB_PASSWORD=DB_PASSWORD:latest"
 ```
 
@@ -427,8 +427,8 @@ gcloud run deploy ebookstore-app ^
   --platform=managed ^
   --allow-unauthenticated ^
   --port=8080 ^
-  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance ^
-  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance" ^
+  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore ^
+  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore" ^
   --set-secrets="JWT_SECRET=JWT_SECRET:latest,DB_PASSWORD=DB_PASSWORD:latest"
 ```
 
@@ -446,5 +446,56 @@ gcloud run services logs read ebookstore-app --region=asia-southeast2 --limit=50
 Ulangi **BUILD** lalu **DEPLOY** di atas.
 
 ---
+
+## 8. Troubleshooting
+
+### ❌ Login Error: "Terjadi kesalahan server saat login" (HTTP 500)
+
+**Penyebab**: Nama instance Cloud SQL di konfigurasi Cloud Run **salah**. Cloud Run dikonfigurasi dengan `INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore-db-instance`, padahal nama instance yang benar adalah `ebookstore` (bukan `ebookstore-db-instance`).
+
+**Dampak**: Semua endpoint yang butuh database gagal (login, register, books, dll) — bukan cuma login.
+
+**Cara Diagnosa**:
+```bash
+# Cek nama instance yang benar
+gcloud sql instances list
+
+# Cek error logs
+gcloud logging read "resource.type=cloud_run_revision AND resource.labels.service_name=ebookstore-app AND severity>=ERROR" --limit=10 --format="table(timestamp,textPayload)"
+
+# Cek env variables yang terpasang di Cloud Run
+gcloud run services describe ebookstore-app --region=asia-southeast2 --format="yaml(spec.template.spec.containers[0].env)"
+```
+
+**Fix — Deploy ulang dengan instance name yang benar**:
+
+Cloud Shell (Linux/Bash):
+```bash
+gcloud run deploy ebookstore-app \
+  --image=asia-southeast2-docker.pkg.dev/ebookstore-uas-2026-498209/ebookstore-repo/ebookstore-app:latest \
+  --region=asia-southeast2 \
+  --platform=managed \
+  --allow-unauthenticated \
+  --port=8080 \
+  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore \
+  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore" \
+  --set-secrets="JWT_SECRET=JWT_SECRET:latest,DB_PASSWORD=DB_PASSWORD:latest"
+```
+
+CMD Windows:
+```cmd
+gcloud run deploy ebookstore-app ^
+  --image=asia-southeast2-docker.pkg.dev/ebookstore-uas-2026-498209/ebookstore-repo/ebookstore-app:latest ^
+  --region=asia-southeast2 ^
+  --platform=managed ^
+  --allow-unauthenticated ^
+  --port=8080 ^
+  --add-cloudsql-instances=ebookstore-uas-2026-498209:asia-southeast2:ebookstore ^
+  --set-env-vars="DB_USER=db_user,DB_NAME=ebookstore_db,GCP_PROJECT_ID=ebookstore-uas-2026-498209,GCP_LOCATION=asia-southeast2,INSTANCE_CONNECTION_NAME=ebookstore-uas-2026-498209:asia-southeast2:ebookstore" ^
+  --set-secrets="JWT_SECRET=JWT_SECRET:latest,DB_PASSWORD=DB_PASSWORD:latest"
+```
+
+---
 *Dokumen ini dibuat secara otomatis untuk membantu kelancaran UAS/UTS E-Book Store dengan GCP.*
+
 
